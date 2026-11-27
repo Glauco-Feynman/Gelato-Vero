@@ -145,13 +145,17 @@ def aplicar_tema():
         </style>
     """, unsafe_allow_html=True)
 
-    # Renderiza a imagem diretamente via HTML em 100% da largura e 1 polegada (95px) de altura
-    if os.path.exists(t["banner"]):
-        img_b64 = _carregar_imagem_base64(t["banner"])
+    # Renderiza a logo centralizada no topo de todas as páginas
+    caminho_logo = os.path.join(PASTA_IMAGENS, "logo.png")
+    if os.path.exists(caminho_logo):
+        img_b64 = _carregar_imagem_base64(caminho_logo)
         st.markdown(
             f"""
-            <img src="data:image/png;base64,{img_b64}"
-                 style="width: 100%; height: 120px; object-fit: cover; object-position: top center; border-radius: 12px; display: block; margin-bottom: 15px;">
+            <div style="display: flex; justify-content: center; margin-bottom: 20px;">
+                <img src="data:image/png;base64,{img_b64}"
+                     style="width: 180px; height: 180px; object-fit: contain; border-radius: 50%; box-shadow: 0 4px 12px rgba(0,0,0,0.12);">
+            </div>
             """,
             unsafe_allow_html=True
         )
+
