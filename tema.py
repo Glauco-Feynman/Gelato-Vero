@@ -147,7 +147,7 @@ def aplicar_tema():
         </style>
     """, unsafe_allow_html=True)
 
-    # Renderiza a logo centralizada no topo de todas as páginas
+    
     caminho_logo = os.path.join(PASTA_ATUAL, "logo.png")
     if os.path.exists(caminho_logo):
         img_b64 = _carregar_imagem_base64(caminho_logo)
