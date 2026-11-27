@@ -13,8 +13,7 @@ TEMAS = {
         "texto": "#3B2313",
         "destaque": "#D97736",
         "preco": "#2E6F40",
-        "botao_texto": "#FFFFFF",
-        "banner": os.path.join(PASTA_IMAGENS, "banner_creme.png")
+        "botao_texto": "#FFFFFF"
     },
     "🍫 Chocolate": {
         "fundo": "#241410",
@@ -23,8 +22,7 @@ TEMAS = {
         "texto": "#FFF5EE",
         "destaque": "#E07A38",
         "preco": "#F4C06A",
-        "botao_texto": "#FFFFFF",
-        "banner": os.path.join(PASTA_IMAGENS, "banner_chocolate.png")
+        "botao_texto": "#FFFFFF"
     },
     "🌿 Pistache": {
         "fundo": "#F3F8F2",
@@ -33,8 +31,7 @@ TEMAS = {
         "texto": "#1E3A24",
         "destaque": "#4C8C4A",
         "preco": "#2E6F40",
-        "botao_texto": "#FFFFFF",
-        "banner": os.path.join(PASTA_IMAGENS, "banner_pistache.png")
+        "botao_texto": "#FFFFFF"
     },
     "🍓 Morango": {
         "fundo": "#FFF5F7",
@@ -43,8 +40,7 @@ TEMAS = {
         "texto": "#4A1525",
         "destaque": "#D84367",
         "preco": "#9E1B3B",
-        "botao_texto": "#FFFFFF",
-        "banner": os.path.join(PASTA_IMAGENS, "banner_morango.png")
+        "botao_texto": "#FFFFFF"
     }
 }
 
