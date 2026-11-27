@@ -28,7 +28,6 @@ TEMAS = {
         "banner": os.path.join(PASTA_IMAGENS, "banner_chocolate.png")
     },
 
-    },
     "🌿 Pistache": {
         "fundo": "#F3F8F2",
         "card": "#E2EFE0",
@@ -149,7 +148,7 @@ def aplicar_tema():
     """, unsafe_allow_html=True)
 
     # Renderiza a logo centralizada no topo de todas as páginas
-    caminho_logo = os.path.join(PASTA_IMAGENS, "logo.png")
+    caminho_logo = os.path.join(PASTA_ATUAL, "logo.png")
     if os.path.exists(caminho_logo):
         img_b64 = _carregar_imagem_base64(caminho_logo)
         st.markdown(
