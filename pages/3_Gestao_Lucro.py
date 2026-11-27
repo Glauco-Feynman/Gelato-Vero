@@ -91,10 +91,25 @@ preco_minimo_30 = custo_total / 0.70
 
 with col_sim2:
     st.markdown(f"#### Resultado da Simulação: *{nome_simulacao}*")
-    m1, m2, m3 = st.columns(3)
+
+    # CSS para garantir contraste no texto do delta
+    st.markdown("""
+        <style>
+        [data-testid="stMetricDelta"] {
+            color: #4A1C1C !important;
+            font-weight: 600;
+        }
+        [data-testid="stMetricDelta"] svg {
+            fill: #4A1C1C !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+    m1, m2 = st.columns(2)
     m1.metric("Custo Total", f"R$ {custo_total:,.2f}")
     m2.metric("Lucro Líquido", f"R$ {lucro_real:,.2f}")
-    m3.metric("Margem Atual", f"{margem_real:.1f}%", delta=f"{margem_real - 30:.1f}% vs meta")
+
+    st.metric("Margem Atual", f"{margem_real:.1f}%", delta=f"{margem_real - 30:.1f}% vs meta")
 
     st.write("")
     if margem_real >= 30.0:
