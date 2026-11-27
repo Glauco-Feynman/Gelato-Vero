@@ -7,7 +7,7 @@ import pandas as pd
 from tema import aplicar_tema
 
 
-# Configuração da página
+
 st.set_page_config(
     page_title="Gestão & Lucro | Gelato Vero",
     page_icon="📊",
@@ -15,7 +15,6 @@ st.set_page_config(
 )
 aplicar_tema()
 
-# --- BARRA LATERAL ---
 with st.sidebar:
     st.title("🍨 Gelato Vero")
     st.caption("Área Administrativa e Controle de Margem.")
@@ -24,7 +23,6 @@ with st.sidebar:
 
 st.title("Painel de Gestão & Margem de Lucro 📊")
 
-# --- CONTROLE DE ACESSO POR SENHA ---
 if "autenticado" not in st.session_state:
     st.session_state.autenticado = False
 
@@ -39,12 +37,11 @@ if not st.session_state.autenticado:
             st.markdown('<div class="destaque-box">❌ <b>Senha incorreta.</b> Tente novamente.</div>', unsafe_allow_html=True)
     st.stop()
 
-# Botão para sair do painel
+
 if st.sidebar.button("🚪 Sair da Área Restrita"):
     st.session_state.autenticado = False
     st.rerun()
 
-# --- SEÇÃO 1: AUDITORIA DOS PACOTES FECHADOS ATUAIS ---
 st.subheader("1. Auditoria de Rentabilidade — Pacotes de Festa")
 st.write("Acompanhamento automático da margem líquida sobre os preços praticados na página de Festas:")
 
@@ -75,7 +72,6 @@ st.dataframe(
 
 st.divider()
 
-# --- SEÇÃO 2: SIMULADOR INTERATIVO DE PREÇO E MARGEM MÍNIMA ---
 st.subheader("2. Simulador Interativo de Custos e Precificação (Trava de 30%)")
 st.write("Ajuste os custos de polpas naturais, equipe e preço cobrado para testar novos pacotes ou reajustes:")
 
@@ -87,17 +83,16 @@ with col_sim1:
     custo_fixo = st.number_input("Custo com Equipe, Energia e Salão (R$):", min_value=0.0, value=450.0, step=20.0)
     preco_pretendido = st.number_input("Preço de Venda Pretendido (R$):", min_value=1.0, value=1450.0, step=50.0)
 
-# Cálculos financeiros em tempo real
+
 custo_total = custo_polpas + custo_fixo
 lucro_real = preco_pretendido - custo_total
 margem_real = (lucro_real / preco_pretendido) * 100
-# Preço mínimo para garantir exatamente 30% de margem sobre a venda: Custo / (1 - 0.30)
+
 preco_minimo_30 = custo_total / 0.70
 
 with col_sim2:
     st.markdown(f"#### Resultado da Simulação: *{nome_simulacao}*")
 
-    # CSS para garantir contraste no texto do delta
     st.markdown("""
         <style>
         [data-testid="stMetricDelta"] {
