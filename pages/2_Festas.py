@@ -2,7 +2,6 @@ import streamlit as st
 from datetime import date, timedelta
 from tema import aplicar_tema
 
-# Configuração da página
 st.set_page_config(
     page_title="Festas na Sorveteria | Gelato Vero",
     page_icon="🎂",
@@ -10,14 +9,14 @@ st.set_page_config(
 )
 aplicar_tema()
 
-# --- BARRA LATERAL ---
+#barra lateral
 with st.sidebar:
     st.title("🍨 Gelato Vero")
     st.caption("Celebre momentos especiais com gelatos naturais.")
     st.divider()
     st.markdown('<div class="sidebar-aviso">🎉 <b>Eventos Exclusivos:</b> Nossas festas acontecem exclusivamente no salão da sorveteria com pacotes fechados.</div>', unsafe_allow_html=True)
 
-# --- DADOS DOS PACOTES FECHADOS ---
+
 pacotes = {
     "Festa Essencial (Até 20 convidados)": {
         "preco": 1200.00,
@@ -63,13 +62,13 @@ sabores_disponiveis = [
     "Goiaba Vermelha"
 ]
 
-# --- CABEÇALHO ---
+
 st.title("Faça sua Festa na Gelato Vero 🎂🍨")
 st.write("Oferecemos **pacotes fechados** com estrutura completa e nossos autênticos sorvetes de polpa natural.")
 
 st.subheader("1. Conheça Nossos Pacotes Fechados")
 
-# Exibição dos 3 pacotes em colunas
+
 cols = st.columns(3)
 for idx, (nome_pacote, info) in enumerate(pacotes.items()):
     with cols[idx]:
@@ -87,7 +86,6 @@ for idx, (nome_pacote, info) in enumerate(pacotes.items()):
 
 st.divider()
 
-# --- SIMULADOR E PRÉ-RESERVA INTERATIVA ---
 st.subheader("2. Monte sua Solicitação de Reserva")
 
 col_form1, col_form2 = st.columns(2)
