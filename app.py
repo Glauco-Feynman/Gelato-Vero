@@ -8,7 +8,6 @@ st.set_page_config(
     layout="wide",
     initial_sidebar_state="expanded"
 )
-aplicar_tema()
 
 # --- BARRA LATERAL (SIDEBAR) ---
 with st.sidebar:
