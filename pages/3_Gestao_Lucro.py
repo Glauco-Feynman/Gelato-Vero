@@ -1,63 +1,135 @@
+import sys
+import os
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 import streamlit as st
+import pandas as pd
 from tema import aplicar_tema
 
-# Configuração geral da página (sempre deve ser o primeiro comando Streamlit)
+
+# Configuração da página
 st.set_page_config(
-    page_title="Gelato Vero | Tradição em Polpas Naturais",
-    page_icon="🍨",
-    layout="wide",
-    initial_sidebar_state="expanded"
+    page_title="Gestão & Lucro | Gelato Vero",
+    page_icon="📊",
+    layout="wide"
 )
 aplicar_tema()
 
-# --- BARRA LATERAL (SIDEBAR) ---
+# --- BARRA LATERAL ---
 with st.sidebar:
     st.title("🍨 Gelato Vero")
-    st.caption("Tradição artesanal feita com 100% polpa de fruta natural.")
+    st.caption("Área Administrativa e Controle de Margem.")
     st.divider()
-    st.markdown('<div class="sidebar-aviso">👈 Use o menu acima para navegar entre nossos sabores, reservar sua festa ou acessar a gestão.</div>', unsafe_allow_html=True)
-    st.markdown("**📍 Onde estamos:**\nRua das Frutas Naturais, 120 - Centro")
-    st.markdown("**🕒 Horário:**\nTerça a Domingo, das 12h às 22h")
+    st.markdown('<div class="sidebar-aviso">🔒 <b>Meta Financeira:</b> Todo pacote ou produto deve manter margem de lucro mínima de <b>30%</b>.</div>', unsafe_allow_html=True)
 
-# --- CONTEÚDO DA PÁGINA INICIAL ---
-st.title("Bem-vindo à Gelato Vero 🍓🥭🍋")
-st.subheader("O verdadeiro sabor da fruta, batido com tradição e servido no nosso espaço.")
+st.title("Painel de Gestão & Margem de Lucro 📊")
 
-# Banner de boas-vindas
-st.markdown("""
-<div class="destaque-box">
-    <h4>✨ Nossa Essência</h4>
-    <p>Na <b>Gelato Vero</b>, não usamos essências artificiais nem corantes. Cada receita nasce da 
-    <b>polpa natural selecionada</b>, respeitando o tempo e o sabor verdadeiro de cada estação. 
-    Nosso salão foi pensado para reunir famílias, amigos e celebrar momentos inesquecíveis.</p>
-</div>
-""", unsafe_allow_html=True)
+# --- CONTROLE DE ACESSO POR SENHA ---
+if "autenticado" not in st.session_state:
+    st.session_state.autenticado = False
 
-# Pilares da sorveteria em 3 colunas
-col1, col2, col3 = st.columns(3)
+if not st.session_state.autenticado:
+    st.markdown('<div class="destaque-box">🔐 Esta área é restrita à administração da <b>Gelato Vero</b>. Digite a senha para acessar.</div>', unsafe_allow_html=True)
+    senha = st.text_input("Senha de acesso:", type="password", placeholder="Dica: gelato30")
+    if st.button("Entrar no Painel", type="primary"):
+        if senha == "gelato30":
+            st.session_state.autenticado = True
+            st.rerun()
+        else:
+            st.markdown('<div class="destaque-box">❌ <b>Senha incorreta.</b> Tente novamente.</div>', unsafe_allow_html=True)
+    st.stop()
 
-with col1:
-    st.markdown("### 🌿 100% Polpa Natural")
-    st.write("Trabalhamos exclusivamente com polpas de frutas frescas e receitas tradicionais passadas de geração em geração.")
+# Botão para sair do painel
+if st.sidebar.button("🚪 Sair da Área Restrita"):
+    st.session_state.autenticado = False
+    st.rerun()
 
-with col2:
-    st.markdown("### 🏡 Experiência no Local")
-    st.write("Não fazemos delivery porque acreditamos que o gelato perfeito deve ser apreciado fresco, na hora, em nosso salão.")
+# --- SEÇÃO 1: AUDITORIA DOS PACOTES FECHADOS ATUAIS ---
+st.subheader("1. Auditoria de Rentabilidade — Pacotes de Festa")
+st.write("Acompanhamento automático da margem líquida sobre os preços praticados na página de Festas:")
 
-with col3:
-    st.markdown("### 🎉 Sua Festa Aqui")
-    st.write("Reserve nossa sorveteria com pacotes fechados exclusivos e encante seus convidados com sabores naturais.")
+dados_pacotes = [
+    {"Pacote": "Festa Essencial (20 pessoas)", "Preço Venda (R$)": 1200.00, "Custo Polpas/Insumos (R$)": 420.00, "Custo Equipe/Espaço (R$)": 320.00},
+    {"Pacote": "Festa Tradição (40 pessoas)", "Preço Venda (R$)": 2200.00, "Custo Polpas/Insumos (R$)": 780.00, "Custo Equipe/Espaço (R$)": 550.00},
+    {"Pacote": "Festa Vero Completa (60 pessoas)", "Preço Venda (R$)": 3100.00, "Custo Polpas/Insumos (R$)": 1100.00, "Custo Equipe/Espaço (R$)": 780.00},
+]
+
+df = pd.DataFrame(dados_pacotes)
+df["Custo Total (R$)"] = df["Custo Polpas/Insumos (R$)"] + df["Custo Equipe/Espaço (R$)"]
+df["Lucro Líquido (R$)"] = df["Preço Venda (R$)"] - df["Custo Total (R$)"]
+df["Margem (%)"] = (df["Lucro Líquido (R$)"] / df["Preço Venda (R$)"]) * 100
+df["Status Meta (30%)"] = df["Margem (%)"].apply(lambda m: "✅ Meta Batida" if m >= 30 else "🚨 Abaixo de 30%")
+
+st.dataframe(
+    df.style.format({
+        "Preço Venda (R$)": "R$ {:.2f}",
+        "Custo Polpas/Insumos (R$)": "R$ {:.2f}",
+        "Custo Equipe/Espaço (R$)": "R$ {:.2f}",
+        "Custo Total (R$)": "R$ {:.2f}",
+        "Lucro Líquido (R$)": "R$ {:.2f}",
+        "Margem (%)": "{:.1f}%"
+    }),
+    use_container_width=True,
+    hide_index=True
+)
 
 st.divider()
 
-# Chamada interativa para ação (Navegação rápida)
-st.markdown("### O que você gostaria de fazer agora?")
-btn_col1, btn_col2 = st.columns(2)
+# --- SEÇÃO 2: SIMULADOR INTERATIVO DE PREÇO E MARGEM MÍNIMA ---
+st.subheader("2. Simulador Interativo de Custos e Precificação (Trava de 30%)")
+st.write("Ajuste os custos de polpas naturais, equipe e preço cobrado para testar novos pacotes ou reajustes:")
 
-with btn_col1:
-    if st.button("🍦 Conhecer Nossos Sabores", use_container_width=True):
-        st.switch_page("pages/1_Nossos_Sabores.py")
+col_sim1, col_sim2 = st.columns(2)
 
-with btn_col2:
-    if st.button("🎂 Simular Festa na Sorveteria", use_container_width=True, type="primary"):
-        st.switch_page("pages/2_Festas.py")
+with col_sim1:
+    nome_simulacao = st.text_input("Nome do Pacote ou Item:", value="Novo Pacote Festa 30 Pessoas")
+    custo_polpas = st.number_input("Custo com Polpas Naturais e Insumos (R$):", min_value=0.0, value=600.0, step=20.0)
+    custo_fixo = st.number_input("Custo com Equipe, Energia e Salão (R$):", min_value=0.0, value=450.0, step=20.0)
+    preco_pretendido = st.number_input("Preço de Venda Pretendido (R$):", min_value=1.0, value=1450.0, step=50.0)
+
+# Cálculos financeiros em tempo real
+custo_total = custo_polpas + custo_fixo
+lucro_real = preco_pretendido - custo_total
+margem_real = (lucro_real / preco_pretendido) * 100
+# Preço mínimo para garantir exatamente 30% de margem sobre a venda: Custo / (1 - 0.30)
+preco_minimo_30 = custo_total / 0.70
+
+with col_sim2:
+    st.markdown(f"#### Resultado da Simulação: *{nome_simulacao}*")
+
+    # CSS para garantir contraste no texto do delta
+    st.markdown("""
+        <style>
+        [data-testid="stMetricDelta"] {
+            color: #4A1C1C !important;
+            font-weight: 600;
+        }
+        [data-testid="stMetricDelta"] svg {
+            fill: #4A1C1C !important;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
+    m1, m2 = st.columns(2)
+    m1.metric("Custo Total", f"R$ {custo_total:,.2f}")
+    m2.metric("Lucro Líquido", f"R$ {lucro_real:,.2f}")
+
+    st.metric("Margem Atual", f"{margem_real:.1f}%", delta=f"{margem_real - 30:.1f}% vs meta")
+
+    st.write("")
+    if margem_real >= 30.0:
+        st.markdown(f"""
+        <div class="destaque-box">
+            <h4>✅ Aprovado!</h4>
+            <p>Este valor garante <b>{margem_real:.1f}% de lucro</b>, superando a meta mínima de 30%.</p>
+        </div>
+        """, unsafe_allow_html=True)
+    else:
+        diferenca = preco_minimo_30 - preco_pretendido
+        st.markdown(f"""
+        <div class="destaque-box">
+            <h4>🚨 Atenção: Margem abaixo de 30%!</h4>
+            <p>Para atingir exatamente <b>30% de lucro</b> sobre este custo de R$ {custo_total:,.2f}, 
+            o preço mínimo de venda deve ser <b>R$ {preco_minimo_30:,.2f}</b> (aumente pelo menos R$ {diferenca:,.2f}).</p>
+        </div>
+        """, unsafe_allow_html=True)
