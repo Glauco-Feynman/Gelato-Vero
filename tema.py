@@ -2,6 +2,7 @@ import os
 import base64
 import streamlit as st
 
+
 PASTA_ATUAL = os.path.dirname(os.path.abspath(__file__))
 PASTA_IMAGENS = os.path.join(PASTA_ATUAL, "imagens")
 
