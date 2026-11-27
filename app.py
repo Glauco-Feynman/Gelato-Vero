@@ -1,7 +1,6 @@
 import streamlit as st
 from tema import aplicar_tema
 
-# Configuração geral da página (sempre deve ser o primeiro comando Streamlit)
 st.set_page_config(
     page_title="Gelato Vero | Tradição em Polpas Naturais",
     page_icon="🍨",
@@ -10,7 +9,6 @@ st.set_page_config(
 )
 aplicar_tema()
 
-# --- BARRA LATERAL (SIDEBAR) ---
 with st.sidebar:
     st.title("🍨 Gelato Vero")
     st.caption("Tradição artesanal feita com 100% polpa de fruta natural.")
@@ -19,11 +17,10 @@ with st.sidebar:
     st.markdown("**📍 Onde estamos:**\nRua das Frutas Naturais, 120 - Centro")
     st.markdown("**🕒 Horário:**\nTerça a Domingo, das 12h às 22h")
 
-# --- CONTEÚDO DA PÁGINA INICIAL ---
 st.title("Bem-vindo à Gelato Vero 🍓🥭🍋")
 st.subheader("O verdadeiro sabor da fruta, batido com tradição e servido no nosso espaço.")
 
-# Banner de boas-vindas
+
 st.markdown("""
 <div class="destaque-box">
     <h4>✨ Nossa Essência</h4>
@@ -33,7 +30,6 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
-# Pilares da sorveteria em 3 colunas
 col1, col2, col3 = st.columns(3)
 
 with col1:
@@ -50,7 +46,7 @@ with col3:
 
 st.divider()
 
-# Chamada interativa para ação (Navegação rápida)
+
 st.markdown("### O que você gostaria de fazer agora?")
 btn_col1, btn_col2 = st.columns(2)
 
