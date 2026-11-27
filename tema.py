@@ -16,7 +16,7 @@ TEMAS = {
         "botao_texto": "#FFFFFF",
         "banner": os.path.join(PASTA_IMAGENS, "banner_creme.png")
     },
-    "🍫 Chocolate": {
+     "🍫 Chocolate": {
         "fundo": "#241410",
         "card": "#3B231C",
         "sidebar": "#1A0E0B",
@@ -24,14 +24,8 @@ TEMAS = {
         "destaque": "#E07A38",
         "preco": "#F4C06A",
         "botao_texto": "#FFFFFF",
-        "banner": os.path.join(PASTA_IMAGENS, "banner_chocolate.png"),
-        st.markdown("""
-    <style>
-    [data-testid="stMetricDelta"] > div {
-        color: #7D1D1D !important;
-    }
-    </style>
-""", unsafe_allow_html=True)
+        "banner": os.path.join(PASTA_IMAGENS, "banner_chocolate.png")
+    },
 
     },
     "🌿 Pistache": {
