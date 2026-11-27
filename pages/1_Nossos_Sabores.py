@@ -1,7 +1,7 @@
 import streamlit as st
 from tema import aplicar_tema
 
-# Configuração da página
+
 st.set_page_config(
     page_title="Nossos Sabores | Gelato Vero",
     page_icon="🍓",
@@ -9,14 +9,14 @@ st.set_page_config(
 )
 aplicar_tema()
 
-# --- BARRA LATERAL ---
+
 with st.sidebar:
     st.title("🍨 Gelato Vero")
     st.caption("Sabores batidos diariamente com polpa natural.")
     st.divider()
     st.markdown('<div class="sidebar-aviso">💡 <b>Consumo exclusivo no salão:</b> Nossos gelatos não são enviados por delivery para preservar a textura artesanal.</div>', unsafe_allow_html=True)
 
-# --- BASE DE DADOS DOS SABORES TRADICIONAIS ---
+
 sabores = [
     {
         "nome": "Morango Silvestre",
@@ -68,11 +68,10 @@ sabores = [
     }
 ]
 
-# --- CABEÇALHO ---
 st.title("Nossos Sabores Tradicionais 🍨")
 st.write("Explore nossa vitrine feita exclusivamente com **polpas de frutas naturais**.")
 
-# --- FILTROS INTERATIVOS ---
+
 col_filtro1, col_filtro2 = st.columns([1, 2])
 
 with col_filtro1:
@@ -84,7 +83,7 @@ with col_filtro2:
 
 st.divider()
 
-# --- LÓGICA DE FILTRAGEM ---
+
 sabores_filtrados = []
 for s in sabores:
     bate_categoria = (categoria_escolhida == "Todas as Categorias") or (s["categoria"] == categoria_escolhida)
@@ -92,7 +91,7 @@ for s in sabores:
     if bate_categoria and bate_busca:
         sabores_filtrados.append(s)
 
-# --- EXIBIÇÃO EM CARDS ---
+
 if not sabores_filtrados:
     st.markdown('<div class="destaque-box">⚠️ Nenhum sabor encontrado com esse filtro. Tente limpar a busca!</div>', unsafe_allow_html=True)
 else:
@@ -109,7 +108,7 @@ else:
 
 st.divider()
 
-# --- INTERAÇÃO EXTRA: COMBINAÇÃO SUGERIDA ---
+
 st.subheader("🥄 Monte sua combinação ideal para pedir no balcão")
 escolhas = st.multiselect(
     "Selecione até 3 sabores naturais para visualizar sua taça:",
